@@ -1,0 +1,25 @@
+
+
+
+UUID+设备号序列号 唯一识别码（不可变）
+private String getMyUUID(){
+  final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);   
+  final String tmDevice, tmSerial, tmPhone, androidId;   
+  tmDevice = "" + tm.getDeviceId();  
+  tmSerial = "" + tm.getSimSerialNumber();   
+  androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);   
+  UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());   
+  String uniqueId = deviceUuid.toString();
+  Log.d("debug","uuid="+uniqueId);
+  return uniqueId;
+ }
+ //ffffffff-d085-0c07-23f3-272602ab51f4   32位
+java 获取可变UUID
+ private String getMyUUID(){
+  UUID uuid = UUID.randomUUID();
+     String uniqueId = uuid.toString();
+   Log.d("debug","----->UUID"+uuid);
+    return uniqueId;
+   }
+获得的格式：如下样子
+d22f30b8-2716-41d2-84f2-4cd56bb75ecc
